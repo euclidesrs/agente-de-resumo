@@ -2,18 +2,17 @@ import os
 from crewai import Agent, Task, Crew
 from dotenv import load_dotenv
 
-# Carregar variáveis do .env (se existirem, mas não é obrigatório)
+
 load_dotenv()
 
 print("SISTEMA MULTIAGENTE - RESUMOS DE IA")
 print("Powered only by Groq")
 print("=" * 40)
 
-# ======== Configuração do modelo (Groq) ========
-# Troquei para um modelo válido do Groq
+# modelo válido do Groq
 GROQ_MODEL = "groq/llama-3.1-8b-instant"
 
-# ======== Definição dos agentes ========
+#  Definição dos agentes
 pesquisador = Agent(
     role="Pesquisador de Notícias de IA",
     goal="Pesquisar as 5 principais notícias sobre Inteligência Artificial e Machine Learning.",
@@ -32,7 +31,7 @@ resumidor = Agent(
     llm=GROQ_MODEL
 )
 
-# ======== Definição das tarefas ========
+#= Definição das tarefas 
 tarefa_pesquisa = Task(
     description="Pesquise e colete as 5 principais notícias recentes sobre IA e ML. "
                 "Para cada notícia, forneça:\n"
@@ -48,14 +47,14 @@ tarefa_resumo = Task(
     agent=resumidor
 )
 
-# ======== Crew ========
+#  Crew 
 crew = Crew(
     agents=[pesquisador, resumidor],
     tasks=[tarefa_pesquisa, tarefa_resumo],
     verbose=True
 )
 
-# ======== Execução ========
+# Execução
 print("\nIniciando geração do resumo semanal de IA...\n")
 resultado = crew.kickoff()
 
